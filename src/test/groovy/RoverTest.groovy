@@ -3,11 +3,6 @@ import spock.lang.Unroll
 
 class RoverTest extends Specification {
 
-    def "initial test"() {
-        expect:
-        true
-    }
-
     @Unroll
     def "can initialize rover with x=1 y = 1 and facing #foo"() {
         def rover = new Rover(1, 1, facing)
@@ -34,7 +29,7 @@ class RoverTest extends Specification {
 
     def "rover(1,1,n) receives input 'f' and moves to (2,1,n)"() {
         given:
-        def rover = new Rover(1,1,FACING.NORTH)
+        def rover = new Rover(1, 1, FACING.NORTH)
 
         when:
         def newRover = rover.receiveInput("f", rover)
@@ -47,7 +42,7 @@ class RoverTest extends Specification {
 
     def "rover(2,2,n) receives input 'f' and moves to (3,2,n)"() {
         given:
-        def rover = new Rover(2,2,FACING.NORTH)
+        def rover = new Rover(2, 2, FACING.NORTH)
 
         when:
         def newRover = rover.receiveInput("f", rover)
@@ -60,7 +55,7 @@ class RoverTest extends Specification {
 
     def "rover(1,1,n) receives input 'b' and moves to (0,1,n)"() {
         given:
-        def rover = new Rover(1,1,FACING.NORTH)
+        def rover = new Rover(1, 1, FACING.NORTH)
 
         when:
         def newRover = rover.receiveInput("b", rover)
@@ -69,6 +64,27 @@ class RoverTest extends Specification {
         newRover.getX() == 0
         newRover.getY() == 1
         newRover.getFacing() == FACING.NORTH
+    }
+
+    @Unroll
+    def "rover(1,1,#oldFacing) receives input 'r' and moves to (1,1,#newFacing)"() {
+        given:
+        def rover = new Rover(1, 1, oldFacing)
+
+        when:
+        def newRover = rover.receiveInput("r", rover)
+
+        then:
+        newRover.getX() == 1
+        newRover.getY() == 1
+        newRover.getFacing() == newFacing
+
+        where:
+        oldFacing    | newFacing
+        FACING.NORTH | FACING.EAST
+        FACING.EAST  | FACING.SOUTH
+        FACING.SOUTH | FACING.WEST
+        FACING.WEST  | FACING.NORTH
     }
 
 }
