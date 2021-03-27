@@ -37,10 +37,36 @@ class RoverTest extends Specification {
         def rover = new Rover(1,1,FACING.NORTH)
 
         when:
-        def newRover = rover.receiveInput("f")
+        def newRover = rover.receiveInput("f", rover)
 
         then:
         newRover.getX() == 2
+        newRover.getY() == 1
+        newRover.getFacing() == FACING.NORTH
+    }
+
+    def "rover(2,2,n) receives input 'f' and moves to (3,2,n)"() {
+        given:
+        def rover = new Rover(2,2,FACING.NORTH)
+
+        when:
+        def newRover = rover.receiveInput("f", rover)
+
+        then:
+        newRover.getX() == 3
+        newRover.getY() == 2
+        newRover.getFacing() == FACING.NORTH
+    }
+
+    def "rover(1,1,n) receives input 'b' and moves to (0,1,n)"() {
+        given:
+        def rover = new Rover(1,1,FACING.NORTH)
+
+        when:
+        def newRover = rover.receiveInput("b", rover)
+
+        then:
+        newRover.getX() == 0
         newRover.getY() == 1
         newRover.getFacing() == FACING.NORTH
     }
