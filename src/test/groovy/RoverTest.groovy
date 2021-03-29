@@ -89,7 +89,29 @@ class RoverTest extends Specification {
         where:
         given                         | expected
         new Rover(1, 1, FACING.NORTH) | new Rover(1, 2, FACING.NORTH)
-       // new Rover(1, 1, FACING.EAST)  | new Rover(2, 1, FACING.EAST)
+        new Rover(1, 1, FACING.EAST)  | new Rover(2, 1, FACING.EAST)
+        new Rover(1, 1, FACING.SOUTH) | new Rover(1, 0, FACING.SOUTH)
+        new Rover(1, 1, FACING.WEST)  | new Rover(0, 1, FACING.WEST)
+    }
+
+
+    @Unroll
+    def "go backwards facing #given"() {
+        given:
+        def subjectForTest = given
+
+        when:
+        def newRover = subjectForTest.receiveInput("b", subjectForTest)
+
+        then:
+        newRover == expected
+
+        where:
+        given                         | expected
+        new Rover(1, 1, FACING.NORTH) | new Rover(1, 0, FACING.NORTH)
+        new Rover(1, 1, FACING.EAST)  | new Rover(0, 1, FACING.EAST)
+        new Rover(1, 1, FACING.SOUTH) | new Rover(1, 2, FACING.SOUTH)
+        new Rover(1, 1, FACING.WEST)  | new Rover(2, 1, FACING.WEST)
     }
 
 }
