@@ -1,21 +1,20 @@
 data class Rover(val x: Int, val y: Int, val facing: FACING) {
 
     fun receiveInput(input: String, rover: Rover): Rover {
-//        when (input) {
-//            input.equals("r") -> {return turnRight(rover)}
-//            else -> return rover;
-//        }
-
         if (input.contentEquals("r")) {
             return turnRight(rover)
         }
         if (input.contentEquals("b")) {
-            return Rover((rover.x - 1), rover.y, rover.facing)
+            return Rover(rover.x, (rover.y-1), rover.facing)
         }
         if (input.contentEquals("f")) {
-            return Rover((rover.x + 1), rover.y, rover.facing)
+            return Rover(rover.x, (rover.y+1), rover.facing)
         }
         return rover
+//        when (input) {
+//            input.equals("r") -> {return turnRight(rover)}
+//            else -> return rover;
+//        }
     }
 
     private fun turnRight(rover: Rover): Rover {

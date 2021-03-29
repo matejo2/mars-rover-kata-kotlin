@@ -1,3 +1,4 @@
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -27,20 +28,7 @@ class RoverTest extends Specification {
         rover.getFacing() == FACING.SOUTH
     }
 
-    def "rover(1,1,n) receives input 'f' and moves to (2,1,n)"() {
-        given:
-        def rover = new Rover(1, 1, FACING.NORTH)
-
-        when:
-        def newRover = rover.receiveInput("f", rover)
-
-        then:
-        newRover.getX() == 2
-        newRover.getY() == 1
-        newRover.getFacing() == FACING.NORTH
-    }
-
-    def "rover(2,2,n) receives input 'f' and moves to (3,2,n)"() {
+    def "rover(2,2,n) receives input 'f' and moves to (2,3,n)"() {
         given:
         def rover = new Rover(2, 2, FACING.NORTH)
 
@@ -48,12 +36,12 @@ class RoverTest extends Specification {
         def newRover = rover.receiveInput("f", rover)
 
         then:
-        newRover.getX() == 3
-        newRover.getY() == 2
+        newRover.getX() == 2
+        newRover.getY() == 3
         newRover.getFacing() == FACING.NORTH
     }
 
-    def "rover(1,1,n) receives input 'b' and moves to (0,1,n)"() {
+    def "rover(1,1,n) receives input 'b' and moves to (1,0,n)"() {
         given:
         def rover = new Rover(1, 1, FACING.NORTH)
 
@@ -61,8 +49,8 @@ class RoverTest extends Specification {
         def newRover = rover.receiveInput("b", rover)
 
         then:
-        newRover.getX() == 0
-        newRover.getY() == 1
+        newRover.getX() == 1
+        newRover.getY() == 0
         newRover.getFacing() == FACING.NORTH
     }
 
@@ -85,6 +73,23 @@ class RoverTest extends Specification {
         FACING.EAST  | FACING.SOUTH
         FACING.SOUTH | FACING.WEST
         FACING.WEST  | FACING.NORTH
+    }
+
+    @Unroll
+    def "go forward facing #given"() {
+        given:
+        def subjectForTest = given
+
+        when:
+        def newRover = subjectForTest.receiveInput("f", subjectForTest)
+
+        then:
+        newRover == expected
+
+        where:
+        given                         | expected
+        new Rover(1, 1, FACING.NORTH) | new Rover(1, 2, FACING.NORTH)
+       // new Rover(1, 1, FACING.EAST)  | new Rover(2, 1, FACING.EAST)
     }
 
 }
