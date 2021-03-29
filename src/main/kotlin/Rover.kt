@@ -3,6 +3,7 @@ data class Rover(val x: Int, val y: Int, val facing: FACING) {
     fun receiveInput(input: String, rover: Rover): Rover {
         return when  {
             input.contentEquals("r") -> turnRight(rover)
+            input.contentEquals("l") -> turnLeft(rover)
             input.contentEquals("f") -> moveForward(rover)
             input.contentEquals("b") -> moveBackwards(rover)
             else -> return rover
@@ -33,6 +34,14 @@ data class Rover(val x: Int, val y: Int, val facing: FACING) {
         }
         return Rover(rover.x, rover.y, FACING.values()[rover.facing.ordinal + 1])
     }
+
+    private fun turnLeft(rover: Rover):Rover {
+        if (rover.facing == FACING.NORTH) {
+           return Rover(rover.x, rover.y, FACING.WEST)
+        }
+        return Rover(rover.x, rover.y, FACING.values()[rover.facing.ordinal - 1])
+    }
+
 }
 
 // cannot access this in my tests?
