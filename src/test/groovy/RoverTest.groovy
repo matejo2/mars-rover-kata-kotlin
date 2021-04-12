@@ -33,7 +33,7 @@ class RoverTest extends Specification {
         def rover = new Rover(2, 2, FACING.NORTH)
 
         when:
-        def newRover = rover.receiveInput("f", rover)
+        def newRover = rover.receiveSingleInput("f", rover)
 
         then:
         newRover.getX() == 2
@@ -46,7 +46,7 @@ class RoverTest extends Specification {
         def rover = new Rover(1, 1, FACING.NORTH)
 
         when:
-        def newRover = rover.receiveInput("b", rover)
+        def newRover = rover.receiveSingleInput("b", rover)
 
         then:
         newRover.getX() == 1
@@ -60,7 +60,7 @@ class RoverTest extends Specification {
         def rover = new Rover(1, 1, oldFacing)
 
         when:
-        def newRover = rover.receiveInput("r", rover)
+        def newRover = rover.receiveSingleInput("r", rover)
 
         then:
         newRover.getX() == 1
@@ -81,7 +81,7 @@ class RoverTest extends Specification {
         def rover = new Rover(1, 1, oldFacing)
 
         when:
-        def newRover = rover.receiveInput("l", rover)
+        def newRover = rover.receiveSingleInput("l", rover)
 
         then:
         newRover.getX() == 1
@@ -102,7 +102,7 @@ class RoverTest extends Specification {
         def subjectForTest = given
 
         when:
-        def newRover = subjectForTest.receiveInput("f", subjectForTest)
+        def newRover = subjectForTest.receiveSingleInput("f", subjectForTest)
 
         then:
         newRover == expected
@@ -115,14 +115,13 @@ class RoverTest extends Specification {
         new Rover(1, 1, FACING.WEST)  | new Rover(0, 1, FACING.WEST)
     }
 
-
     @Unroll
     def "go backwards facing #given"() {
         given:
         def subjectForTest = given
 
         when:
-        def newRover = subjectForTest.receiveInput("b", subjectForTest)
+        def newRover = subjectForTest.receiveSingleInput("b", subjectForTest)
 
         then:
         newRover == expected
@@ -133,6 +132,33 @@ class RoverTest extends Specification {
         new Rover(1, 1, FACING.EAST)  | new Rover(0, 1, FACING.EAST)
         new Rover(1, 1, FACING.SOUTH) | new Rover(1, 2, FACING.SOUTH)
         new Rover(1, 1, FACING.WEST)  | new Rover(2, 1, FACING.WEST)
+    }
+
+    @Ignore
+    def "rover receives string of input"() {
+        given:
+        def rover = new Rover(1, 1, FACING.NORTH)
+
+        when:
+        def dd = rover.receiveInput("frff", rover)
+
+        then:
+        dd == new Rover(3, 2, FACING.EAST)
+    }
+
+    @Unroll
+    def "#given receives #input returns #expected"() {
+        when:
+        def result = given.receiveInput(input, given)
+
+        then:
+        result == expected
+
+        where:
+        input  | given                         | expected
+        "ff"   | new Rover(1, 1, FACING.NORTH) | new Rover(1, 3, FACING.NORTH)
+        "fff"  | new Rover(1, 1, FACING.NORTH) | new Rover(1, 4, FACING.NORTH)
+        "frff" | new Rover(1, 1, FACING.NORTH) | new Rover(3, 2, FACING.EAST)
     }
 
 }

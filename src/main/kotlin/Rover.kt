@@ -1,11 +1,39 @@
 data class Rover(val x: Int, val y: Int, val facing: FACING) {
 
     fun receiveInput(input: String, rover: Rover): Rover {
+        // length of string, so oft dann rover aufrufen
+
+        // input.forEach { receiveSingleInput(it, rover) }
+        // return rover
+        // input.forEach {
+        //    receiveSingleInput(it, rover)
+        //}
+
+        rover.run {  }
+
+        var foo = receiveSingleInput(input[0], rover)
+        var bar = receiveSingleInput(input[1], foo)
+        var bizz = receiveSingleInput(input[2], bar)
+        var returnThis = receiveSingleInput(input[3], bizz)
+        return returnThis
+    }
+
+    fun receiveSingleInput(input: String, rover: Rover): Rover {
         return when  {
             input.contentEquals("r") -> turnRight(rover)
             input.contentEquals("l") -> turnLeft(rover)
             input.contentEquals("f") -> moveForward(rover)
             input.contentEquals("b") -> moveBackwards(rover)
+            else -> return rover
+        }
+    }
+
+    private fun receiveSingleInput(input: Char, rover: Rover): Rover {
+        return when  {
+            input == 'r' -> turnRight(rover)
+            input == 'l' -> turnLeft(rover)
+            input== 'f' -> moveForward(rover)
+            input=='b' -> moveBackwards(rover)
             else -> return rover
         }
     }
