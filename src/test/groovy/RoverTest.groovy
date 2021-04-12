@@ -31,6 +31,44 @@ class RoverTest extends Specification {
     }
 
     @Unroll
+    def "go forward facing #given"() {
+        given:
+        def rover = given
+
+        when:
+        rover.move("f")
+
+        then:
+        rover == expected
+
+        where:
+        given                         | expected
+        new Rover(1, 1, FACING.NORTH) | new Rover(1, 2, FACING.NORTH)
+        new Rover(1, 1, FACING.EAST)  | new Rover(2, 1, FACING.EAST)
+        new Rover(1, 1, FACING.SOUTH) | new Rover(1, 0, FACING.SOUTH)
+        new Rover(1, 1, FACING.WEST)  | new Rover(0, 1, FACING.WEST)
+    }
+
+    @Unroll
+    def "go backwards facing #given"() {
+        given:
+        def rover = given
+
+        when:
+        rover.move("b")
+
+        then:
+        rover == expected
+
+        where:
+        given                         | expected
+        new Rover(1, 1, FACING.NORTH) | new Rover(1, 0, FACING.NORTH)
+        new Rover(1, 1, FACING.EAST)  | new Rover(0, 1, FACING.EAST)
+        new Rover(1, 1, FACING.SOUTH) | new Rover(1, 2, FACING.SOUTH)
+        new Rover(1, 1, FACING.WEST)  | new Rover(2, 1, FACING.WEST)
+    }
+
+    @Unroll
     def "rover(1,1,#oldFacing) receives input 'r' and moves to (1,1,#newFacing)"() {
         given:
         def rover = new Rover(1, 1, oldFacing)

@@ -22,14 +22,19 @@ data class Rover(var x: Int, var y: Int, var facing: FACING) {
     fun moveForward() {
         when (this.facing) {
             FACING.NORTH -> y += 1
-            FACING.EAST -> this.x + 1
-            FACING.SOUTH -> this.y - 1
-            FACING.WEST -> this.x - 1
+            FACING.EAST -> x += 1
+            FACING.SOUTH -> y -= 1
+            FACING.WEST -> x -= 1
         }
     }
 
     private fun moveBackward() {
-        TODO("Not yet implemented")
+        when (this.facing) {
+            FACING.NORTH -> y -= 1
+            FACING.EAST -> x -= 1
+            FACING.SOUTH -> y += 1
+            FACING.WEST -> x += 1
+        }
     }
 
     private fun turnLeft() {
