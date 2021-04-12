@@ -32,7 +32,7 @@ class RoverTest extends Specification {
     }
 
     @Unroll
-    def "try input #input for #given and expect #expected"() {
+    def "try input #input for 0,0,North and get #expectedCor and #expectedFacing"() {
         given:
         def rover = new Rover(new Coordinates(0, 0), FACING.NORTH)
 
@@ -53,53 +53,55 @@ class RoverTest extends Specification {
     }
 
     @Unroll
-    def "go forward facing #given"() {
+    def "go forward facing #facing"() {
         given:
-        def rover = given
+        def rover = new Rover(new Coordinates(1, 1), facing)
 
         when:
         rover.move("f")
 
         then:
-        rover == expected
+        rover.coordinates == coordinates
+        rover.facing == facing
 
         where:
-        given                         | expected
-        new Rover(1, 1, FACING.NORTH) | new Rover(1, 2, FACING.NORTH)
-        new Rover(1, 1, FACING.EAST)  | new Rover(2, 1, FACING.EAST)
-        new Rover(1, 1, FACING.SOUTH) | new Rover(1, 0, FACING.SOUTH)
-        new Rover(1, 1, FACING.WEST)  | new Rover(0, 1, FACING.WEST)
+        coordinates           | facing
+        new Coordinates(1, 2) | FACING.NORTH
+        new Coordinates(2, 1) | FACING.EAST
+        new Coordinates(1, 0) | FACING.SOUTH
+        new Coordinates(0, 1) | FACING.WEST
     }
 
     @Unroll
-    def "go backwards facing #given"() {
+    def "go backwards facing #facing"() {
         given:
-        def rover = given
+        def rover = new Rover(new Coordinates(1, 1), facing)
 
         when:
         rover.move("b")
 
         then:
-        rover == expected
+        rover.coordinates == coordinates
+        rover.facing == facing
 
         where:
-        given                         | expected
-        new Rover(1, 1, FACING.NORTH) | new Rover(1, 0, FACING.NORTH)
-        new Rover(1, 1, FACING.EAST)  | new Rover(0, 1, FACING.EAST)
-        new Rover(1, 1, FACING.SOUTH) | new Rover(1, 2, FACING.SOUTH)
-        new Rover(1, 1, FACING.WEST)  | new Rover(2, 1, FACING.WEST)
+        coordinates           | facing
+        new Coordinates(1, 0) | FACING.NORTH
+        new Coordinates(0, 1) | FACING.EAST
+        new Coordinates(1, 2) | FACING.SOUTH
+        new Coordinates(2, 1) | FACING.WEST
     }
 
     @Unroll
     def "rover(1,1,#oldFacing) receives input 'r' and moves to (1,1,#newFacing)"() {
         given:
-        def rover = new Rover(1, 1, oldFacing)
+        def rover = new Rover(new Coordinates(1,1), oldFacing)
 
         when:
         rover.move("r")
 
         then:
-        rover == new Rover(1, 1, newFacing)
+        rover.facing == newFacing
 
         where:
         oldFacing    | newFacing
@@ -112,13 +114,13 @@ class RoverTest extends Specification {
     @Unroll
     def "rover(1,1,#oldFacing) receives input 'l' and moves to (1,1,#newFacing)"() {
         given:
-        def rover = new Rover(1, 1, oldFacing)
+        def rover = new Rover(new Coordinates(1,1), oldFacing)
 
         when:
         rover.move("l")
 
         then:
-        rover == new Rover(1, 1, newFacing)
+        rover.facing == newFacing
 
         where:
         oldFacing    | newFacing

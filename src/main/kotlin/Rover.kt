@@ -1,4 +1,4 @@
-  class Rover(var coordinates: Coordinates, var facing: FACING) {
+class Rover(var coordinates: Coordinates, var facing: FACING) {
 
     fun move(input: String): Rover {
          input.forEach { receiveInput(it) }
@@ -17,19 +17,19 @@
 
     private fun moveForward() {
         when (this.facing) {
-            FACING.NORTH -> coordinates.y += 1  //y += 1
-            FACING.EAST -> coordinates.x += 1 // x += 1
-            FACING.SOUTH -> coordinates.y -= 1  //y -= 1
-            FACING.WEST -> coordinates.x -= 1  //x -= 1
+            FACING.NORTH -> coordinates.y += 1
+            FACING.EAST -> coordinates.x += 1
+            FACING.SOUTH -> coordinates.y -= 1
+            FACING.WEST -> coordinates.x -= 1
         }
     }
 
     private fun moveBackward() {
         when (this.facing) {
-            FACING.NORTH -> coordinates.y -= 1  // y -= 1
-            FACING.EAST -> coordinates.x -= 1 //x -= 1
-            FACING.SOUTH -> coordinates.y += 1 //y += 1
-            FACING.WEST -> coordinates.x += 1 //x += 1
+            FACING.NORTH -> coordinates.y -= 1
+            FACING.EAST -> coordinates.x -= 1
+            FACING.SOUTH -> coordinates.y += 1
+            FACING.WEST -> coordinates.x += 1
         }
     }
 
