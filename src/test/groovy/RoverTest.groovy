@@ -5,49 +5,51 @@ class RoverTest extends Specification {
 
     def "new rover can be initialized"() {
         expect:
-        new Rover(1, 1, FACING.NORTH)
+        new Rover(new Coordinates(1, 1), FACING.NORTH)
     }
 
-    def "rover(2,2,n) receives input 'ff' and moves to (2,4,n)"() {
+    def "rover(2,2,n) receives input 'f' and moves to (2,3,n)"() {
         given:
-        def rover = new Rover(2, 2, FACING.NORTH)
+        def rover = new Rover(new Coordinates(2, 2), FACING.NORTH)
 
         when:
         rover.move("f")
 
         then:
-        rover == new Rover(2, 3, FACING.NORTH)
+        rover.coordinates == new Coordinates(2, 3)
     }
 
     def "rover(2,2,n) invalid input 'u' and returns rover(2,2,n) "() {
         given:
-        def rover = new Rover(2, 2, FACING.NORTH)
+        def rover = new Rover(new Coordinates(2, 2), FACING.NORTH)
 
         when:
         rover.move("u")
 
         then:
-        rover == new Rover(2, 2, FACING.NORTH)
+        rover.coordinates == new Coordinates(2, 2)
+        rover.facing == FACING.NORTH
     }
 
     @Unroll
     def "try input #input for #given and expect #expected"() {
         given:
-        def rover = given
+        def rover = new Rover(new Coordinates(0, 0), FACING.NORTH)
 
         when:
         rover.move(input)
 
         then:
-        rover == expected
+        rover.coordinates == expectedCor
+        rover.facing == expectedFacing
 
         where:
-        input   | given                         | expected
-        "ff"    | new Rover(0, 0, FACING.NORTH) | new Rover(0, 2, FACING.NORTH)
-        "bbb"   | new Rover(0, 0, FACING.NORTH) | new Rover(0, -3, FACING.NORTH)
-        "ffbb"  | new Rover(0, 0, FACING.NORTH) | new Rover(0, 0, FACING.NORTH)
-        "rfbr"  | new Rover(0, 0, FACING.NORTH) | new Rover(0, 0, FACING.SOUTH)
-        "fbfrb" | new Rover(0, 0, FACING.NORTH) | new Rover(-1, 1, FACING.EAST)
+        input   | expectedCor            | expectedFacing
+        "ff"    | new Coordinates(0, 2)  | FACING.NORTH
+        "bbb"   | new Coordinates(0, -3) | FACING.NORTH
+        "ffbb"  | new Coordinates(0, 0)  | FACING.NORTH
+        "rfbr"  | new Coordinates(0, 0)  | FACING.SOUTH
+        "fbfrb" | new Coordinates(-1, 1) | FACING.EAST
     }
 
     @Unroll
