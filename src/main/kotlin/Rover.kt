@@ -33,10 +33,20 @@ data class Rover(var x: Int, var y: Int, var facing: FACING) {
     }
 
     private fun turnLeft() {
-        TODO("Not yet implemented")
+        facing = when(this.facing){
+            FACING.NORTH -> FACING.WEST
+            FACING.WEST -> FACING.SOUTH
+            FACING.SOUTH -> FACING.EAST
+            else -> FACING.NORTH
+        }
     }
 
     private fun turnRight() {
-        TODO("Not yet implemented")
+        facing = when(this.facing) {
+            FACING.NORTH -> FACING.EAST
+            FACING.EAST -> FACING.SOUTH
+            FACING.SOUTH -> FACING.WEST
+            else -> FACING.NORTH
+        }
     }
 }
