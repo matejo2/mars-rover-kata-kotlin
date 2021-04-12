@@ -102,7 +102,7 @@ class RoverTest extends Specification {
         def subjectForTest = given
 
         when:
-        def newRover = subjectForTest.receiveSingleInput("f", subjectForTest)
+        def newRover = receiveSingleInput("f", subjectForTest)
 
         then:
         newRover == expected
