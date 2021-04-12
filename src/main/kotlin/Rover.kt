@@ -2,24 +2,20 @@ data class Rover(var x: Int, var y: Int, var facing: FACING) {
 
     fun move(input: String): Rover {
          input.forEach { receiveInput(it) }
-        // this.facing = FACING.WEST
-        // receiveInput('f')
-        //moveForward()
         return this
     }
 
-    fun receiveInput(input: Char) {
-        // change this rover
-        return when {
-            input == 'f' -> moveForward()
-            input == 'b' -> moveBackward()
-            input == 'l' -> turnLeft()
-            input == 'r' -> turnRight()
+    private fun receiveInput(input: Char) {
+        return when (input) {
+            'f' -> moveForward()
+            'b' -> moveBackward()
+            'l' -> turnLeft()
+            'r' -> turnRight()
             else -> return
         }
     }
 
-    fun moveForward() {
+    private fun moveForward() {
         when (this.facing) {
             FACING.NORTH -> y += 1
             FACING.EAST -> x += 1

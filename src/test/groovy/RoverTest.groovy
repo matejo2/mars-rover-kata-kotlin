@@ -3,20 +3,9 @@ import spock.lang.Unroll
 
 class RoverTest extends Specification {
 
-    def "new rover can be initialized" () {
+    def "new rover can be initialized"() {
         expect:
-        new Rover(1,1, FACING.NORTH)
-    }
-
-    def "rover(2,2,n) receives input 'f' and moves to (2,3,n)"() {
-        given:
-        def rover = new Rover(2, 2, FACING.NORTH)
-
-        when:
-        rover.moveForward()
-
-        then:
-        rover == new Rover(2,3,FACING.NORTH)
+        new Rover(1, 1, FACING.NORTH)
     }
 
     def "rover(2,2,n) receives input 'ff' and moves to (2,4,n)"() {
@@ -27,7 +16,27 @@ class RoverTest extends Specification {
         rover.move("f")
 
         then:
-        rover == new Rover(2,3,FACING.NORTH)
+        rover == new Rover(2, 3, FACING.NORTH)
+    }
+
+    @Unroll
+    def "try input #input for #given and expect #expected"() {
+        given:
+        def rover = given
+
+        when:
+        rover.move(input)
+
+        then:
+        rover == expected
+
+        where:
+        input   | given                         | expected
+        "ff"    | new Rover(0, 0, FACING.NORTH) | new Rover(0, 2, FACING.NORTH)
+        "bbb"   | new Rover(0, 0, FACING.NORTH) | new Rover(0, -3, FACING.NORTH)
+        "ffbb"  | new Rover(0, 0, FACING.NORTH) | new Rover(0, 0, FACING.NORTH)
+        "rfbr"  | new Rover(0, 0, FACING.NORTH) | new Rover(0, 0, FACING.SOUTH)
+        "fbfrb" | new Rover(0, 0, FACING.NORTH) | new Rover(-1, 1, FACING.EAST)
     }
 
     @Unroll
@@ -77,7 +86,7 @@ class RoverTest extends Specification {
         rover.move("r")
 
         then:
-        rover == new Rover(1,1,newFacing)
+        rover == new Rover(1, 1, newFacing)
 
         where:
         oldFacing    | newFacing
@@ -96,7 +105,7 @@ class RoverTest extends Specification {
         rover.move("l")
 
         then:
-        rover == new Rover(1,1, newFacing)
+        rover == new Rover(1, 1, newFacing)
 
         where:
         oldFacing    | newFacing
