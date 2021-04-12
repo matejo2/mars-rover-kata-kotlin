@@ -19,6 +19,17 @@ class RoverTest extends Specification {
         rover == new Rover(2, 3, FACING.NORTH)
     }
 
+    def "rover(2,2,n) invalid input 'u' and returns rover(2,2,n) "() {
+        given:
+        def rover = new Rover(2, 2, FACING.NORTH)
+
+        when:
+        rover.move("u")
+
+        then:
+        rover == new Rover(2, 2, FACING.NORTH)
+    }
+
     @Unroll
     def "try input #input for #given and expect #expected"() {
         given:

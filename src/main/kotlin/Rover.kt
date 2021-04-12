@@ -1,4 +1,4 @@
-data class Rover(var x: Int, var y: Int, var facing: FACING) {
+ data class Rover(var x: Int, var y: Int, var facing: FACING) {
 
     fun move(input: String): Rover {
          input.forEach { receiveInput(it) }
