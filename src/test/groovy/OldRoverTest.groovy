@@ -21,13 +21,6 @@ class OldRoverTest extends Specification {
         FACING.WEST  | "west"
     }
 
-    def "can initialize rover with x=3 y = 4 and facing SOUTH"() {
-        def rover = new Rover(3, 4, FACING.SOUTH)
-        expect:
-        rover.getX() == 3
-        rover.getY() == 4
-        rover.getFacing() == FACING.SOUTH
-    }
 
     def "rover(2,2,n) receives input 'f' and moves to (2,3,n)"() {
         given:
